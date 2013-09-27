@@ -71,5 +71,9 @@ public class Wallet implements Serializable {
             this.cashAmount = cashAmount;
             return this;
         }
+
+        public Wallet build(){
+            return new Wallet(this);
+        }
     }
 }

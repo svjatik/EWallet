@@ -87,5 +87,9 @@ public class BankAccount implements Serializable {
             this.cashAmount = cashAmount;
             return this;
         }
+
+        public BankAccount build(){
+            return new BankAccount(this);
+        }
     }
 }

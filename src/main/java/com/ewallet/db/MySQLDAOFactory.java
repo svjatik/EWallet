@@ -21,7 +21,13 @@ public class MySQLDAOFactory extends DAOFactory {
     private static final String DB_PASS = "root";
     private static final String UTF_8 = "UTF-8";
 
-    public static Connection createConnection() throws SQLException {
+    private Connection connection;
+
+    public MySQLDAOFactory() throws SQLException {
+        connection = createConnection();
+    }
+
+    private static Connection createConnection() throws SQLException {
         MysqlDataSource d = new MysqlDataSource();
         d.setUser(DB_USER);
         d.setPassword(DB_PASS);
@@ -34,16 +40,16 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public UserDAO getUserDAO() {
-        return new MySQLUserDAO();
+        return new MySQLUserDAO(connection);
     }
 
     @Override
     public WalletDAO getWalletDAO() {
-        return new MySQLWalletDAO();
+        return new MySQLWalletDAO(connection);
     }
 
     @Override
     public BankAccountDAO getBankAccountDAO() {
-        return new MySQLBankAccountDAO();
+        return new MySQLBankAccountDAO(connection);
     }
 }
