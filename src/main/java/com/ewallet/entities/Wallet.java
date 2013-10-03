@@ -1,4 +1,4 @@
-package com.ewallet.model;
+package com.ewallet.entities;
 
 import java.io.Serializable;
 
@@ -9,25 +9,43 @@ import java.io.Serializable;
 public class Wallet implements Serializable {
     private static final long serialVersionUID = 3502250924741228225L;
 
+    private final int id;
     private final int userId;
-    private final float cashAmount;
+    private final Currency currency;
+    private float cashAmount;
 
     public Wallet(){
+        this.id = 0;
         this.userId = 0;
+        this.currency = null;
         this.cashAmount = 0;
     }
 
     private Wallet(Builder builder){
+        this.id = builder.id;
         this.userId = builder.userId;
+        this.currency = builder.currency;
         this.cashAmount = builder.cashAmount;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getUserId() {
         return userId;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
     public float getCashAmount() {
         return cashAmount;
+    }
+
+    public void setCashAmount(float cashAmount) {
+        this.cashAmount = cashAmount;
     }
 
     @Override
@@ -38,14 +56,18 @@ public class Wallet implements Serializable {
         Wallet wallet = (Wallet) o;
 
         if (Float.compare(wallet.cashAmount, cashAmount) != 0) return false;
+        if (id != wallet.id) return false;
         if (userId != wallet.userId) return false;
+        if (currency != null ? !currency.equals(wallet.currency) : wallet.currency != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userId;
+        int result = id;
+        result = 31 * result + userId;
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (cashAmount != +0.0f ? Float.floatToIntBits(cashAmount) : 0);
         return result;
     }
@@ -53,14 +75,23 @@ public class Wallet implements Serializable {
     @Override
     public String toString() {
         return "Wallet{" +
-                "userId=" + userId +
+                "id=" + id +
+                ", userId=" + userId +
+                ", currency=" + currency +
                 ", cashAmount=" + cashAmount +
                 '}';
     }
 
     public static class Builder{
+        private int id;
         private int userId;
         private float cashAmount;
+        private Currency currency;
+
+        public Builder id(int id){
+            this.id = id;
+            return this;
+        }
 
         public Builder userId(int userId){
             this.userId = userId;
@@ -69,6 +100,11 @@ public class Wallet implements Serializable {
 
         public Builder cashAmount(float cashAmount){
             this.cashAmount = cashAmount;
+            return this;
+        }
+
+        public Builder currency(Currency currency){
+            this.currency = currency;
             return this;
         }
 

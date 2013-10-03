@@ -1,4 +1,4 @@
-package com.ewallet.model;
+package com.ewallet.entities;
 
 import java.io.Serializable;
 
@@ -11,17 +11,20 @@ public class BankAccount implements Serializable {
 
     private final int id;
     private final int userId;
-    private final float cashAmount;
+    private final Currency currency;
+    private float cashAmount;
 
     public BankAccount(){
         this.id = 0;
         this.userId = 0;
+        this.currency = null;
         this.cashAmount = 0;
     }
 
     private BankAccount(Builder builder){
         this.id = builder.id;
         this.userId = builder.userId;
+        this.currency = builder.currency;
         this.cashAmount = builder.cashAmount;
     }
 
@@ -33,8 +36,16 @@ public class BankAccount implements Serializable {
         return userId;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
     public float getCashAmount() {
         return cashAmount;
+    }
+
+    public void setCashAmount(float cashAmount) {
+        this.cashAmount = cashAmount;
     }
 
     @Override
@@ -47,6 +58,7 @@ public class BankAccount implements Serializable {
         if (Float.compare(that.cashAmount, cashAmount) != 0) return false;
         if (id != that.id) return false;
         if (userId != that.userId) return false;
+        if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
 
         return true;
     }
@@ -55,6 +67,7 @@ public class BankAccount implements Serializable {
     public int hashCode() {
         int result = id;
         result = 31 * result + userId;
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (cashAmount != +0.0f ? Float.floatToIntBits(cashAmount) : 0);
         return result;
     }
@@ -64,6 +77,7 @@ public class BankAccount implements Serializable {
         return "BankAccount{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", currency=" + currency +
                 ", cashAmount=" + cashAmount +
                 '}';
     }
@@ -71,6 +85,7 @@ public class BankAccount implements Serializable {
     public static class Builder{
         private int id;
         private int userId;
+        private Currency currency;
         private float cashAmount;
 
         public Builder id(int id){
@@ -80,6 +95,11 @@ public class BankAccount implements Serializable {
 
         public Builder userId(int userId){
             this.userId = userId;
+            return this;
+        }
+
+        public Builder currency(Currency currency){
+            this.currency = currency;
             return this;
         }
 

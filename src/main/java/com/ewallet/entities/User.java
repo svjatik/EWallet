@@ -1,4 +1,4 @@
-package com.ewallet.model;
+package com.ewallet.entities;
 
 import java.io.Serializable;
 
@@ -10,10 +10,11 @@ public class User implements Serializable {
     private static final long serialVersionUID = -5932597489694188345L;
 
     private final int id;
-    private final String name;
-    private final String surname;
-    private final String email;
-    private final String password;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String userType;
 
     public User(){
         this.id = 0;
@@ -21,6 +22,7 @@ public class User implements Serializable {
         this.surname = null;
         this.email = null;
         this.password = null;
+        this.userType = null;
     }
 
     private User(Builder builder){
@@ -29,6 +31,7 @@ public class User implements Serializable {
         this.surname = builder.surname;
         this.email = builder.email;
         this.password = builder.password;
+        this.userType = builder.userType;
     }
 
     public int getId() {
@@ -51,6 +54,30 @@ public class User implements Serializable {
         return password;
     }
 
+    public String getUserType(){
+        return userType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,6 +90,7 @@ public class User implements Serializable {
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (userType != null ? !userType.equals(user.userType) : user.userType != null) return false;
 
         return true;
     }
@@ -74,6 +102,7 @@ public class User implements Serializable {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (userType != null ? userType.hashCode() : 0);
         return result;
     }
 
@@ -85,6 +114,7 @@ public class User implements Serializable {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", userType='" + userType + '\'' +
                 '}';
     }
 
@@ -94,6 +124,7 @@ public class User implements Serializable {
         private String surname;
         private String email;
         private String password;
+        private String userType;
 
         public Builder id(int id){
             this.id = id;
@@ -117,6 +148,11 @@ public class User implements Serializable {
 
         public Builder password(String password){
             this.password = password;
+            return this;
+        }
+
+        public Builder userType(String userType){
+            this.userType = userType;
             return this;
         }
 

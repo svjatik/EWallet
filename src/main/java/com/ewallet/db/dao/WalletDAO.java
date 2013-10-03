@@ -1,6 +1,6 @@
 package com.ewallet.db.dao;
 
-import com.ewallet.model.Wallet;
+import com.ewallet.entities.Wallet;
 
 import java.util.List;
 
@@ -9,5 +9,7 @@ import java.util.List;
  * Date: 9/27/13
  */
 public interface WalletDAO {
-    public List<Wallet> selectAllWallets();
+    public List<Wallet> findAll();
+    public Wallet findWalletByUserId(int userId);
+    public int insertWallet(Wallet wallet);
 }
