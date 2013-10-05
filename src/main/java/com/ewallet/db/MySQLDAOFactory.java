@@ -1,5 +1,6 @@
 package com.ewallet.db;
 
+import com.ewallet.common.utils.MySQLDBConfig;
 import com.ewallet.db.dao.BankAccountDAO;
 import com.ewallet.db.dao.UserDAO;
 import com.ewallet.db.dao.WalletDAO;
@@ -18,12 +19,6 @@ import java.sql.SQLException;
  */
 public class MySQLDAOFactory extends DAOFactory implements ICurrencyHandler {
 
-    private static final String DB_NAME = "bionic";
-    private static final String HOST = "localhost";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "root";
-    private static final String UTF_8 = "UTF-8";
-
     private static Connection connection;
 
     public MySQLDAOFactory() throws SQLException {
@@ -31,12 +26,14 @@ public class MySQLDAOFactory extends DAOFactory implements ICurrencyHandler {
     }
 
     private static Connection createConnection() throws SQLException {
+        MySQLDBConfig config = MySQLDBConfig.getInstance();
+
         MysqlDataSource d = new MysqlDataSource();
-        d.setUser(DB_USER);
-        d.setPassword(DB_PASS);
-        d.setServerName(HOST);
-        d.setDatabaseName(DB_NAME);
-        d.setEncoding(UTF_8);
+        d.setUser(config.getProperty(MySQLDBConfig.DB_USER));
+        d.setPassword(config.getProperty(MySQLDBConfig.DB_PASS));
+        d.setServerName(config.getProperty(MySQLDBConfig.HOST));
+        d.setDatabaseName(config.getProperty(MySQLDBConfig.DB_NAME));
+        d.setEncoding(config.getProperty(MySQLDBConfig.UTF_8));
 
         return d.getConnection();
     }
